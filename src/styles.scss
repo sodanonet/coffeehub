@@ -1,1 +1,170 @@
-/* You can add global styles to this file, and also import other style files */
+/* CSS Variables for Theming */
+:root {
+  /* Light theme colors (default) */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-secondary: #6b7280;
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  /* Background colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-app: #f3f4f6;
+
+  /* Text colors */
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-inverse: #ffffff;
+
+  /* Border colors */
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Transition */
+  --transition: all 0.2s ease-in-out;
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  /* Primary colors stay the same for consistency */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-secondary: #9ca3af;
+  --color-danger: #ef4444;
+  --color-danger-hover: #f87171;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  /* Background colors */
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --bg-tertiary: #374151;
+  --bg-app: #111827;
+
+  /* Text colors */
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --text-inverse: #111827;
+
+  /* Border colors */
+  --border-primary: #374151;
+  --border-secondary: #4b5563;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+}
+
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.5;
+}
+
+/* Smooth theme transitions */
+body,
+div,
+section,
+article,
+header,
+footer,
+nav,
+button,
+input,
+select,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Dark mode overrides for Tailwind gray colors */
+[data-theme='dark'] {
+  .text-gray-900 {
+    color: var(--text-primary) !important;
+  }
+  .text-gray-800 {
+    color: var(--text-primary) !important;
+  }
+  .text-gray-700 {
+    color: var(--text-secondary) !important;
+  }
+  .text-gray-600 {
+    color: var(--text-secondary) !important;
+  }
+  .text-gray-500 {
+    color: var(--text-tertiary) !important;
+  }
+  .text-gray-400 {
+    color: var(--text-tertiary) !important;
+  }
+
+  .bg-white {
+    background-color: var(--bg-primary) !important;
+  }
+  .bg-gray-50 {
+    background-color: var(--bg-secondary) !important;
+  }
+  .bg-gray-100 {
+    background-color: var(--bg-tertiary) !important;
+  }
+  .bg-gray-200 {
+    background-color: var(--bg-tertiary) !important;
+  }
+
+  .border-gray-200 {
+    border-color: var(--border-primary) !important;
+  }
+  .border-gray-300 {
+    border-color: var(--border-secondary) !important;
+  }
+
+  .hover\:bg-gray-50:hover {
+    background-color: var(--bg-tertiary) !important;
+  }
+  .hover\:bg-gray-100:hover {
+    background-color: var(--bg-tertiary) !important;
+  }
+  .hover\:text-gray-900:hover {
+    color: var(--text-primary) !important;
+  }
+}
