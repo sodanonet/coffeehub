@@ -30,7 +30,6 @@
               }
             ],
             "styles": [
-              "src/styles.css",
               "src/styles.scss"
             ]
           },
@@ -89,7 +88,6 @@
               }
             ],
             "styles": [
-              "src/styles.css",
               "src/styles.scss"
             ]
           }
