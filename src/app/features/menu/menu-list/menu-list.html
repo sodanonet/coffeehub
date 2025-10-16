@@ -1,1 +1,139 @@
-<div>Menu List Works!</div>
+<div class="max-w-7xl mx-auto px-8 py-6">
+  <header class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Menu Management</h1>
+      <p class="text-gray-600 mt-2">Manage your coffee shop menu items</p>
+    </div>
+    <app-button (clicked)="navigateToCreate()"> + Add Menu Item </app-button>
+  </header>
+
+  <div class="flex gap-4 mb-8 flex-wrap">
+    <input
+      type="text"
+      placeholder="Search menu items..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+      class="flex-1 min-w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+
+    <select
+      [(ngModel)]="selectedCategory"
+      (change)="onCategoryFilter()"
+      class="px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    >
+      <option value="">All Categories</option>
+      @for (category of categories; track category) {
+        <option [value]="category">
+          {{ category }}
+        </option>
+      }
+    </select>
+
+    <label class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white cursor-pointer">
+      <input
+        type="checkbox"
+        [(ngModel)]="showOnlyAvailable"
+        (change)="onAvailabilityFilter()"
+      />
+      <span>Available Only</span>
+    </label>
+  </div>
+
+  @if (loading()) {
+    <app-loading-spinner message="Loading menu items..." />
+  }
+
+  @if (!loading()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (item of menuItems(); track item.id) {
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
+      <div class="flex justify-between items-center px-4 py-3 bg-gray-50 border-b border-gray-200">
+        <span
+          class="px-3 py-1 rounded-full text-xs font-semibold uppercase"
+          [class.bg-yellow-100]="item.category === 'COFFEE'"
+          [class.text-yellow-800]="item.category === 'COFFEE'"
+          [class.bg-purple-100]="item.category === 'ESPRESSO'"
+          [class.text-purple-800]="item.category === 'ESPRESSO'"
+          [class.bg-green-100]="item.category === 'TEA'"
+          [class.text-green-800]="item.category === 'TEA'"
+          [class.bg-blue-100]="item.category === 'BLENDED'"
+          [class.text-blue-800]="item.category === 'BLENDED'"
+          [class.bg-pink-100]="item.category === 'PASTRIES'"
+          [class.text-pink-800]="item.category === 'PASTRIES'"
+          [class.bg-orange-100]="item.category === 'SNACKS'"
+          [class.text-orange-800]="item.category === 'SNACKS'"
+        >
+          {{ item.category }}
+        </span>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input
+            type="checkbox"
+            [checked]="item.available"
+            (change)="toggleAvailability(item)"
+          />
+          <span>{{ item.available ? 'Available' : 'Unavailable' }}</span>
+        </label>
+      </div>
+
+      <div
+        class="p-6 cursor-pointer"
+        tabindex="0"
+        role="button"
+        (click)="navigateToEdit(item.id)"
+        (keydown.enter)="navigateToEdit(item.id)"
+        (keydown.space)="navigateToEdit(item.id)"
+      >
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+        <p class="text-sm text-gray-600 mb-4">{{ item.description }}</p>
+
+        <div class="flex gap-4 mb-4">
+          <div class="flex items-center gap-1 text-sm text-gray-700">
+            <span>💰</span>
+            <span>${{ item.price }}</span>
+          </div>
+          <div class="flex items-center gap-1 text-sm text-gray-700">
+            <span>🔥</span>
+            <span>{{ item.calories }} cal</span>
+          </div>
+          <div class="flex items-center gap-1 text-sm text-gray-700">
+            <span>⏱️</span>
+            <span>{{ item.prepTime }} min</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200">
+          <span class="block text-sm font-medium text-gray-600 mb-2">Sizes:</span>
+          <div class="flex flex-wrap gap-2">
+            @for (size of item.sizes; track size.name) {
+              <span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
+                {{ size.name }} - ${{ size.price }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex gap-2 px-4 py-3 border-t border-gray-200 bg-gray-50"
+        tabindex="0"
+        role="group"
+        aria-label="Menu item actions"
+        (click)="$event.stopPropagation()"
+        (keydown.enter)="$event.stopPropagation()"
+        (keydown.space)="$event.stopPropagation()"
+      >
+        <app-button variant="outline" (clicked)="navigateToEdit(item.id)"> Edit </app-button>
+        <app-button variant="danger" (clicked)="confirmDelete(item)"> Delete </app-button>
+        </div>
+      </div>
+      }
+
+      @if (menuItems().length === 0) {
+        <div class="col-span-full text-center py-12">
+          <p class="text-gray-600 mb-4">No menu items found</p>
+          <app-button (clicked)="navigateToCreate()"> Add Your First Item </app-button>
+        </div>
+      }
+    </div>
+  }
+</div>
