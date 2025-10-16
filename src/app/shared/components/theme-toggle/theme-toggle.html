@@ -1,0 +1,8 @@
+<button
+  class="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-900 border border-gray-200 rounded-md font-medium cursor-pointer transition-all hover:bg-gray-200 hover:border-gray-300"
+  (click)="toggleTheme()"
+  [title]="'Current theme: ' + currentTheme()"
+>
+  <span class="text-xl">{{ getThemeIcon() }}</span>
+  <span class="text-sm capitalize">{{ getThemeLabel() }}</span>
+</button>
