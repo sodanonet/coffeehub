@@ -1,1 +1,50 @@
-<div>Order Confirmation Works!</div>
+<div>
+  <app-customer-header />
+
+  <div class="max-w-2xl mx-auto px-8 py-12">
+    <div class="text-center">
+      <div class="flex items-center justify-center w-24 h-24 bg-green-100 text-green-600 rounded-full text-5xl font-bold mx-auto mb-6">
+        ✓
+      </div>
+
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Order Confirmed!</h1>
+
+      <p class="text-lg text-gray-600 mb-8">
+        Thank you for your order. We've received it and will start preparing
+        it shortly.
+      </p>
+
+      <app-card class="mb-8 text-left">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Order Details</h3>
+
+        <div class="space-y-3">
+          <div class="flex justify-between items-center py-2 border-b border-gray-200">
+            <span class="text-gray-600 font-medium">Order Number:</span>
+            <span class="text-gray-900 font-semibold">#{{ orderNumber }}</span>
+          </div>
+
+          <div class="flex justify-between items-center py-2 border-b border-gray-200">
+            <span class="text-gray-600 font-medium">Status:</span>
+            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">Pending</span>
+          </div>
+
+          <div class="flex justify-between items-center py-2">
+            <span class="text-gray-600 font-medium">Estimated Time:</span>
+            <span class="text-gray-900 font-semibold">15-20 minutes</span>
+          </div>
+        </div>
+      </app-card>
+
+      <div class="flex gap-4 justify-center mb-6">
+        <app-button (clicked)="goHome()"> Back to Home </app-button>
+        <app-button variant="outline" (clicked)="orderAgain()">
+          Order Again
+        </app-button>
+      </div>
+
+      <p class="text-sm text-gray-600">
+        Questions about your order? Contact us at <span class="text-blue-600">support@coffeehub.com</span>
+      </p>
+    </div>
+  </div>
+</div>
