@@ -1,1 +1,72 @@
-<div>Customer Home Works!</div>
+<div>
+  <app-customer-header />
+
+  <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
+    <div class="max-w-7xl mx-auto px-8 text-center">
+      <h1 class="text-5xl font-bold mb-4">Welcome to CoffeeHub</h1>
+      <p class="text-xl text-blue-100">Order your favorite coffee from our stores</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-8 py-12">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Select a Store to Order From</h2>
+
+    @if (loading()) {
+      <app-loading-spinner message="Loading stores..." />
+    }
+
+    @if (!loading()) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (store of stores(); track store.id) {
+          <div
+            class="bg-white rounded-lg border-2 transition-all cursor-pointer shadow-sm hover:shadow-md"
+            (click)="selectStore(store)"
+            (keydown.enter)="selectStore(store)"
+            [class.border-blue-500]="selectedStoreId() === store.id"
+            [class.border-gray-200]="selectedStoreId() !== store.id"
+            tabindex="0"
+            role="button"
+          >
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">{{ store.name }}</h3>
+                <span
+                  class="px-2 py-1 text-xs font-medium rounded-full"
+                  [class.bg-green-100]="store.status === 'OPEN'"
+                  [class.text-green-800]="store.status === 'OPEN'"
+                  [class.bg-red-100]="store.status !== 'OPEN'"
+                  [class.text-red-800]="store.status !== 'OPEN'"
+                >
+                  {{ store.status }}
+                </span>
+              </div>
+              <div class="space-y-2 mb-4">
+                <p class="text-sm text-gray-600">📍 {{ store.location }}, {{ store.city }}</p>
+                <p class="text-sm text-gray-600">🕐 {{ store.openingHours }}</p>
+                <p class="text-sm text-gray-600">👤 Manager: {{ store.manager }}</p>
+              </div>
+              <div class="pt-4 border-t border-gray-200">
+                @if (store.status === 'OPEN') {
+                  <app-button (clicked)="selectStore(store)" class="w-full">
+                    Order from this store
+                  </app-button>
+                }
+                @if (store.status !== 'OPEN') {
+                  <span class="block text-center text-sm text-red-600 font-medium"
+                    >Currently closed</span
+                  >
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (stores().length === 0) {
+          <div class="col-span-full text-center py-12">
+            <p class="text-gray-600 text-lg">No stores available at this moment</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
