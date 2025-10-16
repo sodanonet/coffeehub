@@ -1,6 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "schematicCollections": [
+      "angular-eslint"
+    ]
+  },
   "newProjectRoot": "projects",
   "projects": {
     "coffeehub": {
@@ -30,6 +36,7 @@
               }
             ],
             "styles": [
+              "src/styles.css",
               "src/styles.scss"
             ]
           },
@@ -88,7 +95,17 @@
               }
             ],
             "styles": [
+              "src/styles.css",
               "src/styles.scss"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }

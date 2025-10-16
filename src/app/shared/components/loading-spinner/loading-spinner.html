@@ -1,12 +1,12 @@
 <div class="flex flex-col items-center justify-center gap-4">
   <div
-    class="border-3 border-gray-200 border-t-blue-500 rounded-full animate-spin"
+    class="rounded-full animate-spin border-[3px] border-gray-200 border-t-blue-500"
     [class.w-5]="size() === 'small'"
     [class.h-5]="size() === 'small'"
     [class.w-10]="size() === 'medium'"
     [class.h-10]="size() === 'medium'"
-    [class.w-15]="size() === 'large'"
-    [class.h-15]="size() === 'large'"
+    [class.w-16]="size() === 'large'"
+    [class.h-16]="size() === 'large'"
   ></div>
   @if (message()) {
     <p class="text-gray-600 text-sm">{{ message() }}</p>

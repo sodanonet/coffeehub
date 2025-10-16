@@ -1,0 +1,19 @@
+# Build outputs
+dist/
+build/
+.angular/
+
+# Dependencies
+node_modules/
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db
