@@ -1,0 +1,43 @@
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr>
+        @for (column of columns(); track column) {
+          <th
+            class="px-3 py-2 text-left border-b border-gray-200 bg-gray-100 font-semibold text-gray-900"
+            [class.cursor-pointer]="column.sortable"
+            [class.select-none]="column.sortable"
+            [class.hover:bg-gray-200]="column.sortable"
+            (click)="column.sortable && sort(column.key)"
+          >
+            {{ column.label }}
+            @if (column.sortable && sortKey === column.key) {
+              <span>
+                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+              </span>
+            }
+          </th>
+        }
+        @if (hasActions()) {
+          <th class="px-3 py-2 text-left border-b border-gray-200 bg-gray-100 font-semibold text-gray-900">Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of data(); track row) {
+        <tr class="hover:bg-gray-100">
+          @for (column of columns(); track column) {
+            <td class="px-3 py-2 text-left border-b border-gray-200 text-gray-900">
+              {{ row[column.key] }}
+            </td>
+          }
+          @if (hasActions()) {
+            <td class="px-3 py-2 text-left border-b border-gray-200 text-gray-900">
+              <ng-content select="[actions]"></ng-content>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
