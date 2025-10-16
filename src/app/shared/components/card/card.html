@@ -1,0 +1,20 @@
+<div
+  class="rounded-lg overflow-hidden transition-all"
+  [class.shadow-sm]="elevated()"
+  [style.background-color]="'var(--bg-primary)'"
+  [style.border]="'1px solid var(--border-primary)'"
+>
+  @if (title()) {
+    <div class="px-6 py-4" [style.border-bottom]="'1px solid var(--border-primary)'">
+      <h3 class="m-0 text-lg font-semibold" [style.color]="'var(--text-primary)'">{{ title() }}</h3>
+    </div>
+  }
+  <div class="p-6">
+    <ng-content></ng-content>
+  </div>
+  @if (hasFooter()) {
+    <div class="px-6 py-4" [style.border-top]="'1px solid var(--border-primary)'" [style.background-color]="'var(--bg-secondary)'">
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  }
+</div>
