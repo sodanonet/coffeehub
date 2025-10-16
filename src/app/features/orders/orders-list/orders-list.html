@@ -1,1 +1,142 @@
-<div>Orders List Works!</div>
+<div class="max-w-7xl mx-auto px-8 py-6">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Orders</h1>
+    <p class="text-gray-600 mt-2">View and manage customer orders</p>
+  </header>
+
+  <div class="flex gap-4 mb-8 flex-wrap items-center">
+    <input
+      type="text"
+      placeholder="Search orders..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+      class="flex-1 min-w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+
+    <select
+      [(ngModel)]="statusFilter"
+      (change)="onFilterChange()"
+      class="px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    >
+      <option value="">All Statuses</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">
+          {{ status }}
+        </option>
+      }
+    </select>
+
+    <div class="ml-auto text-sm text-gray-600">
+      Showing {{ (currentPage() - 1) * pageSize + 1 }} -
+      {{ Math.min(currentPage() * pageSize, totalOrders()) }} of {{ totalOrders() }} orders
+    </div>
+  </div>
+
+  @if (loading()) {
+    <app-loading-spinner message="Loading orders..." />
+  }
+
+  @if (!loading()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      @for (order of orders(); track order.id) {
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-6 cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1"
+          tabindex="0"
+          role="button"
+          (click)="viewOrderDetail(order.id)"
+          (keydown.enter)="viewOrderDetail(order.id)"
+        >
+      <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-200">
+        <div class="text-lg font-semibold text-gray-900">{{ order.orderNumber }}</div>
+        <span
+          class="px-3 py-1 rounded-full text-xs font-semibold uppercase"
+          [class.bg-yellow-100]="order.status === 'PENDING'"
+          [class.text-yellow-800]="order.status === 'PENDING'"
+          [class.bg-blue-100]="order.status === 'PREPARING'"
+          [class.text-blue-800]="order.status === 'PREPARING'"
+          [class.bg-green-100]="order.status === 'READY'"
+          [class.text-green-800]="order.status === 'READY'"
+          [class.bg-indigo-100]="order.status === 'COMPLETED'"
+          [class.text-indigo-800]="order.status === 'COMPLETED'"
+          [class.bg-red-100]="order.status === 'CANCELLED'"
+          [class.text-red-800]="order.status === 'CANCELLED'"
+        >
+          {{ order.status }}
+        </span>
+      </div>
+
+      <div class="space-y-2 mb-4">
+        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+          <span class="text-gray-600 font-medium">Customer:</span>
+          <span class="text-gray-900">{{ order.customerName }}</span>
+        </div>
+        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+          <span class="text-gray-600 font-medium">Store:</span>
+          <span class="text-gray-900">{{ order.storeName }}</span>
+        </div>
+        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+          <span class="text-gray-600 font-medium">Items:</span>
+          <span class="text-gray-900">{{ order.items.length }} item(s)</span>
+        </div>
+        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+          <span class="text-gray-600 font-medium">Total:</span>
+          <span class="text-green-600 font-semibold">${{ order.total }}</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-600 font-medium">Payment:</span>
+          <span class="text-gray-900">{{ formatPaymentMethod(order.paymentMethod) }}</span>
+        </div>
+      </div>
+
+      <div class="pt-4 mt-4 border-t border-gray-200">
+          @for (item of order.items; track $index) {
+            <div class="text-sm text-gray-600">
+              {{ item.quantity }}x {{ item.name }} ({{ item.size }})
+            </div>
+          }
+        </div>
+      </div>
+      }
+
+      @if (orders().length === 0) {
+        <div class="col-span-full text-center py-12 text-gray-600">
+          <p>No orders found</p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (!loading() && totalPages() > 1) {
+    <div class="flex justify-center items-center gap-4">
+    <app-button variant="outline" [disabled]="currentPage() === 1" (clicked)="previousPage()">
+      Previous
+    </app-button>
+
+    <div class="flex gap-2">
+        @for (page of getPageNumbers(); track page) {
+          <button
+            [class.bg-blue-500]="page === currentPage()"
+            [class.text-white]="page === currentPage()"
+            [class.border-blue-500]="page === currentPage()"
+            [class.bg-white]="page !== currentPage()"
+            [class.text-gray-700]="page !== currentPage()"
+            [class.border-gray-300]="page !== currentPage()"
+            [class.hover:bg-gray-100]="page !== currentPage()"
+            (click)="goToPage(page)"
+            class="w-10 h-10 border rounded-md transition-colors cursor-pointer"
+          >
+            {{ page }}
+          </button>
+        }
+      </div>
+
+      <app-button
+        variant="outline"
+        [disabled]="currentPage() === totalPages()"
+        (clicked)="nextPage()"
+      >
+        Next
+      </app-button>
+    </div>
+  }
+</div>
