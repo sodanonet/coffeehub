@@ -116,7 +116,6 @@ Comprehensive documentation is available in the `/docs` folder:
 - **[💡 Design Decisions](docs/DESIGN_DECISIONS.md)** - Rationale behind key technical decisions and trade-offs
 - **[📡 API Documentation](docs/API.md)** - Complete API reference for all services
 - **[📊 Architecture Diagrams](docs/DIAGRAMS.md)** - Visual representations of system architecture and data flow
-- **[🔧 Setup Steps](docs/SETUP_STEPS.md)** - Complete step-by-step guide to recreate the project from scratch
 - **[✨ Features Guide](docs/FEATURES.md)** - Detailed guide to dark theme, Tailwind CSS, and modern Angular features
 - **[🐳 Docker Guide](docs/DOCKER.md)** - Complete Docker deployment guide with examples
 
