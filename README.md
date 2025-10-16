@@ -54,9 +54,10 @@ Login with demo credentials:
 
 ## 🛠️ Technology Stack
 
-- **Angular**: 20.1.0
-- **TypeScript**: 5.8.2
-- **Tailwind CSS**: 3.x (utility-first CSS framework)
+- **Angular**: 20.3.0
+- **TypeScript**: 5.9.2
+- **Tailwind CSS**: 4.1.14 (v4 with CSS-first configuration)
+- **PostCSS**: 8.5.6 with @tailwindcss/postcss
 - **RxJS**: 7.8.0
 - **Node.js**: 18+
 - **Docker**: For containerized deployment
@@ -182,7 +183,16 @@ src/app/
 - CSS variables for theming
 - Automatic dark mode with `[data-theme='dark']`
 - Smooth transitions between themes
-- Tailwind CSS integration for consistent styling
+- Tailwind CSS v4 integration for consistent styling
+- ThemeService for persistent theme state
+
+**Tailwind CSS v4**:
+
+- CSS-first configuration approach
+- Automatic utility generation without explicit theme config
+- PostCSS plugin integration
+- Optimized CSS output (only used utilities)
+- Modern CSS with variables and calc()
 
 **Example Component Structure**:
 
