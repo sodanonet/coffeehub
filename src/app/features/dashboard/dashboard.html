@@ -1,1 +1,119 @@
-<div>Dashboard Works!</div>
+<div class="max-w-7xl mx-auto px-8 py-6">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+    <p class="text-gray-600 mt-2">Welcome back! Here's what's happening today.</p>
+  </header>
+
+  @if (loading()) {
+    <app-loading-spinner message="Loading dashboard..." />
+  }
+
+  @if (!loading()) {
+    <div>
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-sm font-medium text-gray-600">Daily Sales</span>
+          <span class="text-2xl">💰</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-900">${{ metrics()?.dailySales || 0 }}</div>
+        <div class="flex items-center gap-2 mt-2 text-green-600">
+          <span class="text-sm font-medium">↑ 8.5%</span>
+          <span class="text-xs text-gray-500">vs yesterday</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-sm font-medium text-gray-600">Total Orders</span>
+          <span class="text-2xl">📦</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-900">{{ metrics()?.totalOrders || 0 }}</div>
+        <div class="flex items-center gap-2 mt-2 text-green-600">
+          <span class="text-sm font-medium">↑ 12.3%</span>
+          <span class="text-xs text-gray-500">vs yesterday</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-sm font-medium text-gray-600">Active Stores</span>
+          <span class="text-2xl">🏪</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-900">{{ metrics()?.activeStores || 0 }}</div>
+        <div class="flex items-center gap-2 mt-2 text-gray-600">
+          <span class="text-sm font-medium">→ 0%</span>
+          <span class="text-xs text-gray-500">vs yesterday</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-sm font-medium text-gray-600">Avg Order Value</span>
+          <span class="text-2xl">📊</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-900">
+          ${{ metrics()?.averageOrderValue || 0 }}
+        </div>
+        <div class="flex items-center gap-2 mt-2 text-green-600">
+          <span class="text-sm font-medium">↑ 5.2%</span>
+          <span class="text-xs text-gray-500">vs yesterday</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Drinks and Store Status Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Top Drinks -->
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Top Selling Drinks</h3>
+        <div class="space-y-3">
+          @for (drink of topDrinks(); track drink.name; let i = $index) {
+            <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+              <div class="flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full font-bold text-sm">
+                {{ i + 1 }}
+              </div>
+              <div class="flex-1">
+                <div class="font-semibold text-gray-900">{{ drink.name }}</div>
+                <div class="text-sm text-gray-600">{{ drink.category }}</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-gray-900">{{ drink.sales }} sold</div>
+                <div class="text-sm text-gray-600">${{ drink.revenue }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Store Status -->
+      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Store Status</h3>
+        <div class="space-y-3">
+          @for (store of storeStatuses(); track store.name) {
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div>
+                <div class="font-semibold text-gray-900">{{ store.name }}</div>
+                <div class="text-sm text-gray-600">{{ store.location }}</div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span
+                  class="px-2 py-1 text-xs font-medium rounded-full"
+                  [class.bg-green-100]="store.status === 'open'"
+                  [class.text-green-800]="store.status === 'open'"
+                  [class.bg-red-100]="store.status === 'closed'"
+                  [class.text-red-800]="store.status === 'closed'"
+                >
+                  {{ store.status }}
+                </span>
+                <div class="text-sm font-medium text-gray-900">${{ store.todaySales }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    </div>
+  }
+</div>
