@@ -12,7 +12,14 @@
     "lint:fix-all": "npm run lint:fix && npm run format",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
-    "format:staged": "prettier --write"
+    "format:staged": "prettier --write",
+    "docker:build": "docker build -t coffeehub-admin .",
+    "docker:run": "docker run -d -p 8080:80 --name coffeehub coffeehub-admin",
+    "docker:stop": "docker stop coffeehub",
+    "docker:start": "docker start coffeehub",
+    "docker:remove": "docker rm -f coffeehub",
+    "docker:logs": "docker logs -f coffeehub",
+    "docker:rebuild": "npm run docker:remove && npm run docker:build && npm run docker:run"
   },
   "prettier": {
     "printWidth": 100,
