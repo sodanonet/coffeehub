@@ -1,1 +1,87 @@
-<div>Order Menu Works!</div>
+<div>
+  <app-customer-header />
+
+  <div class="max-w-7xl mx-auto px-8 py-6">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Our Menu</h1>
+      <button
+        class="flex items-center gap-3 bg-blue-500 text-white px-6 py-3 rounded-lg font-medium transition-colors hover:bg-blue-600 cursor-pointer"
+        (click)="goToCheckout()"
+        (keyup.enter)="goToCheckout()"
+      >
+        <span class="text-xl">🛒</span>
+        <span class="text-sm">{{ cartItemCount() }} items</span>
+        <span class="text-lg font-bold">${{ cartTotal().toFixed(2) }}</span>
+      </button>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-8">
+      @for (category of categories; track category) {
+        <button
+          [class.bg-blue-500]="selectedCategory() === category"
+          [class.text-white]="selectedCategory() === category"
+          [class.bg-gray-100]="selectedCategory() !== category"
+          [class.text-gray-700]="selectedCategory() !== category"
+          [class.hover:bg-blue-600]="selectedCategory() === category"
+          [class.hover:bg-gray-200]="selectedCategory() !== category"
+          (click)="filterByCategory(category)"
+          class="px-4 py-2 rounded-md font-medium transition-colors"
+        >
+          {{ category }}
+        </button>
+      }
+      <button
+        [class.bg-blue-500]="selectedCategory() === null"
+        [class.text-white]="selectedCategory() === null"
+        [class.bg-gray-100]="selectedCategory() !== null"
+        [class.text-gray-700]="selectedCategory() !== null"
+        [class.hover:bg-blue-600]="selectedCategory() === null"
+        [class.hover:bg-gray-200]="selectedCategory() !== null"
+        (click)="clearFilter()"
+        class="px-4 py-2 rounded-md font-medium transition-colors"
+      >
+        All
+      </button>
+    </div>
+
+    @if (loading()) {
+      <app-loading-spinner message="Loading menu..." />
+    }
+
+    @if (!loading()) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (item of filteredItems(); track item.id) {
+          <div
+            class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md"
+          >
+            <div
+              class="flex items-center justify-center h-40 bg-gradient-to-br from-amber-50 to-orange-100 text-6xl"
+            >
+              ☕
+            </div>
+            <div class="p-5">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+              <p class="text-sm text-gray-600 mb-4">{{ item.description }}</p>
+              <div class="flex items-center gap-2 mb-4">
+                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-sm">{{
+                  item.category
+                }}</span>
+                <span class="text-xs text-gray-600">{{ item.calories }} cal</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-2xl font-bold text-gray-900">${{ item.price }}</span>
+                <app-button (clicked)="addToCart(item)"> Add to Cart </app-button>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (filteredItems().length === 0) {
+          <div class="col-span-full text-center py-12">
+            <p class="text-gray-600 text-lg">No items found in this category</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
