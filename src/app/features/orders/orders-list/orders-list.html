@@ -10,13 +10,13 @@
       placeholder="Search orders..."
       [(ngModel)]="searchQuery"
       (input)="onSearch()"
-      class="flex-1 min-w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      class="flex-1 min-w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     />
 
     <select
       [(ngModel)]="statusFilter"
       (change)="onFilterChange()"
-      class="px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      class="px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     >
       <option value="">All Statuses</option>
       @for (status of statuses; track status) {
@@ -46,56 +46,56 @@
           (click)="viewOrderDetail(order.id)"
           (keydown.enter)="viewOrderDetail(order.id)"
         >
-      <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-200">
-        <div class="text-lg font-semibold text-gray-900">{{ order.orderNumber }}</div>
-        <span
-          class="px-3 py-1 rounded-full text-xs font-semibold uppercase"
-          [class.bg-yellow-100]="order.status === 'PENDING'"
-          [class.text-yellow-800]="order.status === 'PENDING'"
-          [class.bg-blue-100]="order.status === 'PREPARING'"
-          [class.text-blue-800]="order.status === 'PREPARING'"
-          [class.bg-green-100]="order.status === 'READY'"
-          [class.text-green-800]="order.status === 'READY'"
-          [class.bg-indigo-100]="order.status === 'COMPLETED'"
-          [class.text-indigo-800]="order.status === 'COMPLETED'"
-          [class.bg-red-100]="order.status === 'CANCELLED'"
-          [class.text-red-800]="order.status === 'CANCELLED'"
-        >
-          {{ order.status }}
-        </span>
-      </div>
+          <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-200">
+            <div class="text-lg font-semibold text-gray-900">{{ order.orderNumber }}</div>
+            <span
+              class="px-3 py-1 rounded-full text-xs font-semibold uppercase"
+              [class.bg-yellow-100]="order.status === 'PENDING'"
+              [class.text-yellow-800]="order.status === 'PENDING'"
+              [class.bg-blue-100]="order.status === 'PREPARING'"
+              [class.text-blue-800]="order.status === 'PREPARING'"
+              [class.bg-green-100]="order.status === 'READY'"
+              [class.text-green-800]="order.status === 'READY'"
+              [class.bg-indigo-100]="order.status === 'COMPLETED'"
+              [class.text-indigo-800]="order.status === 'COMPLETED'"
+              [class.bg-red-100]="order.status === 'CANCELLED'"
+              [class.text-red-800]="order.status === 'CANCELLED'"
+            >
+              {{ order.status }}
+            </span>
+          </div>
 
-      <div class="space-y-2 mb-4">
-        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-          <span class="text-gray-600 font-medium">Customer:</span>
-          <span class="text-gray-900">{{ order.customerName }}</span>
-        </div>
-        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-          <span class="text-gray-600 font-medium">Store:</span>
-          <span class="text-gray-900">{{ order.storeName }}</span>
-        </div>
-        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-          <span class="text-gray-600 font-medium">Items:</span>
-          <span class="text-gray-900">{{ order.items.length }} item(s)</span>
-        </div>
-        <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-          <span class="text-gray-600 font-medium">Total:</span>
-          <span class="text-green-600 font-semibold">${{ order.total }}</span>
-        </div>
-        <div class="flex justify-between text-sm">
-          <span class="text-gray-600 font-medium">Payment:</span>
-          <span class="text-gray-900">{{ formatPaymentMethod(order.paymentMethod) }}</span>
-        </div>
-      </div>
-
-      <div class="pt-4 mt-4 border-t border-gray-200">
-          @for (item of order.items; track $index) {
-            <div class="text-sm text-gray-600">
-              {{ item.quantity }}x {{ item.name }} ({{ item.size }})
+          <div class="space-y-2 mb-4">
+            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+              <span class="text-gray-600 font-medium">Customer:</span>
+              <span class="text-gray-900">{{ order.customerName }}</span>
             </div>
-          }
+            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+              <span class="text-gray-600 font-medium">Store:</span>
+              <span class="text-gray-900">{{ order.storeName }}</span>
+            </div>
+            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+              <span class="text-gray-600 font-medium">Items:</span>
+              <span class="text-gray-900">{{ order.items.length }} item(s)</span>
+            </div>
+            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+              <span class="text-gray-600 font-medium">Total:</span>
+              <span class="text-green-600 font-semibold">${{ order.total }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600 font-medium">Payment:</span>
+              <span class="text-gray-900">{{ formatPaymentMethod(order.paymentMethod) }}</span>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-gray-200">
+            @for (item of order.items; track $index) {
+              <div class="text-sm text-gray-600">
+                {{ item.quantity }}x {{ item.name }} ({{ item.size }})
+              </div>
+            }
+          </div>
         </div>
-      </div>
       }
 
       @if (orders().length === 0) {
@@ -108,25 +108,29 @@
 
   @if (!loading() && totalPages() > 1) {
     <div class="flex justify-center items-center gap-4">
-    <app-button variant="outline" [disabled]="currentPage() === 1" (clicked)="previousPage()">
-      Previous
-    </app-button>
+      <app-button variant="outline" [disabled]="currentPage() === 1" (clicked)="previousPage()">
+        Previous
+      </app-button>
 
-    <div class="flex gap-2">
+      <div class="flex gap-2">
         @for (page of getPageNumbers(); track page) {
-          <button
-            [class.bg-blue-500]="page === currentPage()"
-            [class.text-white]="page === currentPage()"
-            [class.border-blue-500]="page === currentPage()"
-            [class.bg-white]="page !== currentPage()"
-            [class.text-gray-700]="page !== currentPage()"
-            [class.border-gray-300]="page !== currentPage()"
-            [class.hover:bg-gray-100]="page !== currentPage()"
-            (click)="goToPage(page)"
-            class="w-10 h-10 border rounded-md transition-colors cursor-pointer"
-          >
-            {{ page }}
-          </button>
+          @if (page === -1) {
+            <span class="w-10 h-10 flex items-center justify-center text-gray-500"> ... </span>
+          } @else {
+            <button
+              [class.bg-blue-500]="page === currentPage()"
+              [class.text-white]="page === currentPage()"
+              [class.border-blue-500]="page === currentPage()"
+              [class.bg-white]="page !== currentPage()"
+              [class.text-gray-700]="page !== currentPage()"
+              [class.border-gray-300]="page !== currentPage()"
+              [class.hover:bg-gray-100]="page !== currentPage()"
+              (click)="goToPage(page)"
+              class="w-10 h-10 border rounded-md transition-colors cursor-pointer"
+            >
+              {{ page }}
+            </button>
+          }
         }
       </div>
 
