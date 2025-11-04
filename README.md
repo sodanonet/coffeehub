@@ -12,7 +12,7 @@ The application is deployed and running on Render.com's free tier:
 
 | Feature          | Status                                                               |
 | ---------------- | -------------------------------------------------------------------- |
-| 🌐 **Live URL**  | [coffeehub-admin.onrender.com](https://coffeehub-admin.onrender.com) |
+| 🌐 **Live URL**  | [On Render](https://coffeehub-p15i.onrender.com/) |
 | ☁️ **Platform**  | Render.com (Free Static Site)                                        |
 | 🔒 **SSL/HTTPS** | ✅ Automatic via Let's Encrypt                                       |
 | 🚀 **CDN**       | ✅ Global distribution                                               |
