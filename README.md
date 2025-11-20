@@ -6,7 +6,7 @@ A comprehensive Angular admin portal for managing a coffee shop chain, featuring
 
 ### Try It Live
 
-**🔗 [https://coffeehub-admin.onrender.com](https://coffeehub-admin.onrender.com)**
+**🔗 [On Render]([https://coffeehub-admin.onrender.com](https://coffeehub-p15i.onrender.com/))**
 
 The application is deployed and running on Render.com's free tier:
 
