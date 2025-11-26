@@ -171,6 +171,84 @@ Micro-frontends divide a web app into **feature-based fragments** (e.g., Dashboa
 
 ---
 
+## Handling Large Datasets in Angular Applications
+
+Working with large datasets in Angular requires combining smart rendering strategies, efficient data management, and browser-friendly techniques. The goal is to ensure smooth performance even with tens of thousands of rows or complex grids.
+
+---
+
+### 🧠 Key Strategies
+
+#### 1. Use OnPush Change Detection
+- Switch components to `ChangeDetectionStrategy.OnPush` to avoid unnecessary re-renders.
+- Angular only checks for changes when inputs change, improving performance.
+
+---
+
+#### 2. Implement Virtual Scrolling
+- Render only visible rows using Angular CDK’s `cdk-virtual-scroll-viewport`.
+- Reduces DOM load drastically.
+- Ideal for tables, lists, and grids.
+```html
+<cdk-virtual-scroll-viewport itemSize="50" class="viewport">
+  <div *cdkVirtualFor="let item of items; trackBy: trackById">
+    {{ item.name }}
+  </div>
+</cdk-virtual-scroll-viewport>
+```
+```typescript
+trackById(index: number, item: DataItem): number {
+  return item.id;
+}
+```
+---
+
+#### 3. Paginate the Data
+- Load and display data in chunks (e.g., 50–100 rows per page).
+- Combine with server-side pagination for massive datasets.
+- Use Angular Material Table with pagination controls.
+
+---
+
+#### 4. Lazy Load Modules and Routes
+- Split the app into feature modules and load them only when needed.
+- Reduces initial bundle size and speeds up load time.
+
+---
+
+#### 5. Use IndexedDB for Local Storage
+- Store large datasets locally using IndexedDB (via Dexie.js).
+- Enables offline access and fast querying without memory overload.
+- Avoid using `localStorage` or `NgRx` for very large datasets.
+
+---
+
+#### 6. Optimize Rendering with trackBy
+- Use `*ngFor="let item of items; trackBy: trackByFn"` to prevent Angular from re-rendering unchanged items.
+- Essential for dynamic lists.
+
+---
+
+#### 7. Debounce and Throttle User Input
+- Prevent excessive filtering or sorting operations by debouncing search inputs.
+- Use RxJS operators like `debounceTime()` and `distinctUntilChanged()`.
+
+```typescript
+this.searchControl.valueChanges
+  .pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  )
+  .subscribe(query => this.filterData(query));
+```
+---
+
+#### 8. Offload Heavy Processing to Web Workers
+- Move CPU-intensive tasks (e.g., parsing, filtering) to background threads.
+- Keeps UI responsive.
+
+---
+
 ### 🧠 Summary
 
 Modern micro-frontends are powered by **Webpack Module Federation**, **Single-SPA**, and **Nx**, offering runtime flexibility and independent deployment. Older methods like iframes and build-time bundling laid the groundwork but lacked scalability. Today’s tools allow **true decoupling**, enabling teams to ship faster without stepping on each other’s toes.
